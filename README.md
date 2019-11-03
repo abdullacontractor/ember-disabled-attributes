@@ -26,34 +26,35 @@ To use the addon, extend the `DisabledAttributesMixin` and include a `disabled` 
 ```javascript
 import DS from 'ember-data';
 import DisabledAttributesMixin from 'ember-disabled-attributes'
+const { Model, attr } = DS;
 
-export default DS.Model.extend(DisabledAttributesMixin, {
-  status: DS.attr('string'),
-  onlineId: DS.attr('string'),
-  firstName: DS.attr('string'),
-  lastName: DS.attr('string'),
-  birthday:  DS.attr('date'),
+export default Model.extend(DisabledAttributesMixin, {
+  status: attr('string'),
+  onlineId: attr('string'),
+  firstName: attr('string'),
+  lastName: attr('string'),
+  birthday:  attr('date'),
 
   disabled: {
     onlineId: {
       status: {
-        is: 'disabled',
+        not: 'disabled',
         message: 'Please disable the user before changing online id',
       },
     },
     firstName: {
       status: {
-        not: 'archived',
+        is: 'archived',
       },
     },
     lastName: {
       status: {
-        not: 'archived',
+        is: 'archived',
       },
     },
     birthday: {
       status: {
-        not: 'abc123',
+        is: 'abc123',
       },
     },
   },
