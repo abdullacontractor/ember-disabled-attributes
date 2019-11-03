@@ -1,7 +1,7 @@
 ember-disabled-attributes
 ==============================================================================
 
-[Short description of the addon.]
+This addon provides a straightforward syntax to specifiy criterea for disabling attributes on a model. The general idea being to offload decision making about the business logic that would disable things straight to the data layer.
 
 
 Compatibility
@@ -22,8 +22,53 @@ ember install ember-disabled-attributes
 
 Usage
 ------------------------------------------------------------------------------
+To use the addon, extend the `DisabledAttributesMixin` and include a `disabled` hash (this can be a computed property if it needs to be).
+```javascript
+import DS from 'ember-data';
+import DisabledAttributesMixin from 'ember-disabled-attributes'
+const { Model, attr } = DS;
 
-[Longer description of how to use the addon in apps.]
+export default Model.extend(DisabledAttributesMixin, {
+  status: attr('string'),
+  onlineId: attr('string'),
+  firstName: attr('string'),
+  lastName: attr('string'),
+  birthday:  attr('date'),
+
+  disabled: {
+    onlineId: {
+      status: {
+        not: 'disabled',
+        message: 'Please disable the user before changing online id',
+      },
+    },
+    firstName: {
+      status: {
+        is: 'archived',
+      },
+    },
+    lastName: {
+      status: {
+        is: 'archived',
+      },
+    },
+    birthday: {
+      status: {
+        is: 'abc123',
+      },
+    },
+  },
+});
+```
+The mixin would then inject a computed property called `disabledAttributes` that would watch `status` and `disabled` to yield something like 
+```
+disabledAttributes: {
+  onlineId: 'Please disable the user before changing online id',
+  firstName: 'This field is disabled',
+  lastName: 'This field is disabled',
+  birthday: null,
+}
+```
 
 
 Contributing
