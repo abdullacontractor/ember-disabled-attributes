@@ -1,5 +1,6 @@
 ember-disabled-attributes
 ==============================================================================
+[![npm version](https://badge.fury.io/js/ember-disabled-attributes.svg)](https://badge.fury.io/js/ember-disabled-attributes) 
 
 This addon provides a straightforward syntax to specifiy criterea for disabling attributes on a model. The general idea being to offload decision making about the business logic that would disable things straight to the data layer.
 
